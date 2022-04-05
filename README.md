@@ -1,7 +1,6 @@
 # Autenticação JWT com Python
 
-Projeto baseado inicialmente na seguinte na vídeo aula  
-[Clean Architecture Python Extra 1 - Autenticação JWT](https://www.youtube.com/watch?v=ZwBB4LEPLBU&list=PLAgbpJQADBGJmTxeRZKWvdJAoJj8_x3si&index=14), mas utilizando o FastAPI para desenvolvimento da API, além de consulta a informações do usuário armazenadas em banco.
+Projeto baseado inicialmente na vídeo aula [Clean Architecture Python Extra 1 - Autenticação JWT](https://www.youtube.com/watch?v=ZwBB4LEPLBU&list=PLAgbpJQADBGJmTxeRZKWvdJAoJj8_x3si&index=14), mas utilizando o FastAPI para desenvolvimento da API, além de consulta a informações do usuário armazenadas em banco.
 
 A aplicação pode ser iniciada com docker executando os seguintes comandos:
 
