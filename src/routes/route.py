@@ -6,8 +6,9 @@ from pydantic import BaseModel
 from src.infra.entities import User
 from src.infra.config import ConnectionHandler
 from sqlmodel import select
-from .auth import token_creator, token_verify
-from werkzeug.security import check_password_hash
+from src.auth import token_creator, token_verify
+from werkzeug.security import check_password_hash, generate_password_hash
+from uuid import uuid4
 
 @app.get("/")
 def status():

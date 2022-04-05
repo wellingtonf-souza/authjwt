@@ -3,7 +3,7 @@ from imp import reload
 import uvicorn
 from src.configs import app
 import uvicorn
-import src.route
+from src.routes import *
 
 if __name__ == '__main__':
     uvicorn.run(

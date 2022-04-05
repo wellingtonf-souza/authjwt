@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash
 
 class ConnectionHandler:
 
-    def __init__(self, path: str = 'access.db') -> None:
+    def __init__(self, path: str = 'src/data/access.db') -> None:
         self.__engine = create_engine(f'sqlite:///{path}')
         SQLModel.metadata.create_all(self.__engine)
         self.session = Session(self.__engine)
