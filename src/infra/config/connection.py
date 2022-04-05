@@ -1,6 +1,8 @@
 from sqlmodel import Field, SQLModel, create_engine, Session, select
 from src.infra.entities import *
 from uuid import uuid4
+from src.configs import environment_config
+from werkzeug.security import generate_password_hash
 
 class ConnectionHandler:
 
@@ -15,7 +17,11 @@ class ConnectionHandler:
             self.session.exec(select(User.active).where(User.username == User.username, User.active == True))
         )
         if len(users_active.fetchall()) < 1:
-            user = User(username = "admin", password = "admin", uuid = uuid4().hex)
+            user = User(
+                username = environment_config['username_admin'],
+                password = generate_password_hash(environment_config['password_admin'], method='sha256'),
+                uuid = uuid4().hex
+            )
             self.session.add(user)
             self.session.commit()
 

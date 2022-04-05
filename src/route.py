@@ -7,6 +7,7 @@ from src.infra.entities import User
 from src.infra.config import ConnectionHandler
 from sqlmodel import select
 from .auth import token_creator, token_verify
+from werkzeug.security import check_password_hash
 
 @app.get("/")
 def status():
@@ -20,13 +21,20 @@ class UserAuth(BaseModel):
 async def authorization(response: Response, user: UserAuth):
     conn = ConnectionHandler()
     result = conn.session.exec(
-        select(User.uuid).where(User.active == True, User.username == user.username, User.password == user.password)
+        select(User.uuid, User.password)
+        .where(
+            User.active == True, 
+            User.username == user.username
+        )
     )
-    uuid = result.fetchall()
-    if len(uuid) == 0:
+    row = [u._asdict() for u in result.all()]
+    if len(row) != 1:
         response.status_code = status_code.HTTP_401_UNAUTHORIZED
         return {"status_code": 401, "message": "not authorized"}
-    token = token_creator.create(uuid = uuid[0])
+    if not check_password_hash(row[0]['password'],user.password):
+        response.status_code = status_code.HTTP_401_UNAUTHORIZED
+        return {"status_code": 401, "message": "not authorized"}
+    token = token_creator.create(uuid = row[0]['uuid'])
     response.status_code = status_code.HTTP_200_OK
     return {"status_code": 200, 'token': token}
 
